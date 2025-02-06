@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Metronome</title>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<div class="container">
+			<!-- Controls -->
+			<div class="controls">
+				<label>BPM:</label>
+				<input type="number" id="bpm" value="100" min="30" max="300" />
+				<button onclick="startMetronome()">Start</button>
+				<button onclick="stopMetronome()">Stop</button>
+			</div>
+
+			<!-- Clock Face -->
+			<div class="clock">
+				<div id="arm" class="arm"></div>
+				<div id="beats">
+					<!-- 32 dots for kick, snare, and hi-hat -->
+					<script>
+						;['kick', 'snare', 'hiHat'].forEach((type, ring) => {
+							for (let i = 0; i < 32; i++) {
+								document.write(
+									`<div class="beat-dot ${type}" data-index="${i}"></div>`
+								)
+							}
+						})
+					</script>
+				</div>
+			</div>
+		</div>
+
+		<!-- Beat Editor (Checkbox Grid) -->
+		<div class="editor">
+			<h3>Edit Beat Pattern</h3>
+			<div id="beat-grid"></div>
+		</div>
+
+		<script src="script.js"></script>
+	</body>
+</html>
