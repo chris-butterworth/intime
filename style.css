@@ -5,70 +5,178 @@
   border-radius: 50%;
   border: 2px dashed #b0b0b0;
   background: conic-gradient(
-    #3a3a3a 0deg 45deg,
-    #484848 45deg 90deg,
+    /* Subtle background gradient */ #3a3a3a 0deg 45deg,
+    #404040 45deg 90deg,
     #3a3a3a 90deg 135deg,
-    #484848 135deg 180deg,
+    #404040 135deg 180deg,
     #3a3a3a 180deg 225deg,
-    #484848 225deg 270deg,
+    #404040 225deg 270deg,
     #3a3a3a 270deg 315deg,
-    #484848 315deg 360deg
+    #404040 315deg 360deg
   );
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* Arm */
+.ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 2px solid;
+  opacity: 0.7; /* Slightly transparent rings */
+}
+
+.outer-ring {
+  width: 90%;
+  height: 90%;
+  border-color: #66b3ff; /* Muted Blue */
+}
+
+.middle-ring {
+  width: 70%;
+  height: 70%;
+  border-color: #ffcc80; /* Muted Yellow */
+}
+
+.inner-ring {
+  width: 50%;
+  height: 50%;
+  border-color: #ff9980; /* Muted Red */
+}
+
 .arm {
   width: 2px;
   height: 40%;
-  background: red;
+  background: #808080; /* Muted Gray */
   position: absolute;
   top: 50%;
   left: 50%;
   transform-origin: 50% 100%;
   transform: translate(-50%, -100%) rotate(0deg);
-}
-
-#clock-arm {
-  position: absolute;
-  width: 2px;
-  height: 40%;
-  background: white;
-  top: 50%;
-  left: 50%;
-  transform-origin: bottom center;
-  transition: transform 0.05s linear; /* Smoother animation */
+  filter: blur(2px);
 }
 
 .beat-dot {
   position: absolute;
-  width: 10px;
-  height: 10px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
-  display: none; /* Hide by default */
+  display: none;
 }
-
+.beat-dot.grow {
+  transform: scale(2.5); /* Increase size by 20% */
+  transition: transform 0.05s ease-in-out;
+}
 .kick {
-  background: red;
+  background: radial-gradient(
+    circle,
+    #ff6b6b,
+    #b22222
+  ); /* Muted Red Gradient */
+  box-shadow: 0 0 2px #ff6b6b;
 }
+
 .snare {
-  background: yellow;
+  background: radial-gradient(
+    circle,
+    #ffcc80,
+    #ffa500
+  ); /* Muted Yellow Gradient */
+  box-shadow: 0 0 2px #ffcc80;
 }
+
 .hiHat {
-  background: blue;
+  width: 14px;
+  height: 14px;
+  border: 2px solid #66b3ff; /* Muted Blue Outline */
+  background: transparent;
+  box-shadow: 0 0 2px #66b3ff;
 }
 
-/* Beat Editor */
 .editor {
-  margin-top: 20px;
-  overflow-x: auto;
-  white-space: nowrap;
+  overflow-x: auto; /* Enable horizontal scrolling if needed */
+  margin: 20px auto; /* Add some top/bottom margin */
 }
 
-#beat-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
+#play-button {
+  width: 150px;
+  height: 150px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column;
+  margin: auto;
+}
+
+.title {
+  margin-bottom: 40px;
+  font-size: 40px;
+  text-align: center;
+}
+
+#tempo {
+  font-size: 40px;
+}
+
+.bpm {
+  font-size: 12px;
+  text-align: center;
+}
+
+.tempo-controls {
+  margin-top: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: row;
+}
+
+.tempo-container {
+  margin: 0 15px;
+}
+
+button {
+  padding: 6px;
+  border: none;
+  border-radius: 100%;
+  width: 40px;
+  height: 40px;
+  margin: 5px;
+  background-color: #2a4949;
+  color: #e9e9e9;
+  cursor: pointer;
+}
+
+button:focus {
+  outline: none;
+}
+
+a {
+  color: #e9e9e9;
+}
+
+a:hover {
+  color: #356161;
+}
+
+.play {
+  width: 0;
+  height: 0;
+  border-top: 30px solid transparent;
+  border-bottom: 30px solid transparent;
+  border-left: 50px solid #e9e9e9;
+  margin-left: 15px;
+}
+
+.pause {
+  width: 40px;
+  height: 60px;
+  border: none;
+  border-left: 15px solid #e9e9e9;
+  border-right: 15px solid #e9e9e9;
 }
