@@ -1,77 +1,74 @@
-/* General Layout */
-body {
-	margin: 0;
-	font-family: Arial, sans-serif;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
-
-/* Controls */
-.controls {
-	display: flex;
-	gap: 10px;
-	margin-bottom: 10px;
-}
-
-/* Clock Face */
 .clock {
-	position: relative;
-	width: 80vmin;
-	height: 80vmin;
-	border-radius: 50%;
-	background: #ddd;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+  position: relative;
+  width: 90vmin;
+  height: 90vmin;
+  border-radius: 50%;
+  border: 2px dashed #b0b0b0;
+  background: conic-gradient(
+    #3a3a3a 0deg 45deg,
+    #484848 45deg 90deg,
+    #3a3a3a 90deg 135deg,
+    #484848 135deg 180deg,
+    #3a3a3a 180deg 225deg,
+    #484848 225deg 270deg,
+    #3a3a3a 270deg 315deg,
+    #484848 315deg 360deg
+  );
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Arm */
 .arm {
-	width: 2px;
-	height: 40%;
-	background: red;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform-origin: 50% 100%;
-	transform: translate(-50%, -100%) rotate(0deg);
+  width: 2px;
+  height: 40%;
+  background: red;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: 50% 100%;
+  transform: translate(-50%, -100%) rotate(0deg);
 }
 
 #clock-arm {
-    position: absolute;
-    width: 2px;
-    height: 40%;
-    background: white;
-    top: 50%;
-    left: 50%;
-    transform-origin: bottom center;
-    transition: transform 0.05s linear; /* Smoother animation */
+  position: absolute;
+  width: 2px;
+  height: 40%;
+  background: white;
+  top: 50%;
+  left: 50%;
+  transform-origin: bottom center;
+  transition: transform 0.05s linear; /* Smoother animation */
 }
 
 .beat-dot {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    display: none; /* Hide by default */
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: none; /* Hide by default */
 }
 
-.kick { background: red; }
-.snare { background: yellow; }
-.hiHat { background: blue; }
-
+.kick {
+  background: red;
+}
+.snare {
+  background: yellow;
+}
+.hiHat {
+  background: blue;
+}
 
 /* Beat Editor */
 .editor {
-	margin-top: 20px;
-	overflow-x: auto;
-	white-space: nowrap;
+  margin-top: 20px;
+  overflow-x: auto;
+  white-space: nowrap;
 }
 
 #beat-grid {
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	gap: 2px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
 }
-
