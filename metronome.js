@@ -106,7 +106,7 @@ class Metronome {
           dot.classList.add("grow");
           setTimeout(() => {
             dot.classList.remove("grow");
-          }, 100);
+          }, 150);
         }
       });
     }

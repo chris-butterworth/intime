@@ -121,7 +121,8 @@ class Clock {
     this.isPlaying = true;
     this.metronome.start();
 
-    const tick = () => {
+    const updateClockHand = () => {
+      // Renamed for clarity
       if (!this.isPlaying) return;
 
       let angle =
@@ -130,18 +131,14 @@ class Clock {
         360;
       this.hand.update(angle);
 
-      this.tickTimeout = setTimeout(
-        tick,
-        60000 / this.metronome.tempo / this.metronome.subdivision
-      );
+      requestAnimationFrame(updateClockHand); // Use requestAnimationFrame for smoother animation
     };
 
-    tick();
+    updateClockHand(); // Initial call to start the animation loop
   }
 
   stop() {
     this.isPlaying = false;
-    clearTimeout(this.tickTimeout);
     this.hand.update(0); // Reset the hand position
     this.stepIndex = 0; // Reset the step index
     this.metronome.stop(); // Stop the metronome

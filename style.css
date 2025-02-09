@@ -67,8 +67,8 @@
   display: none;
 }
 .beat-dot.grow {
-  transform: scale(2.5); /* Increase size by 20% */
-  transition: transform 0.05s ease-in-out;
+  transform: scale(2);
+  transition: transform 0.1s ease-out;
 }
 .kick {
   background: radial-gradient(
