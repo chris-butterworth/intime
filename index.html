@@ -22,26 +22,14 @@
     <script type="module" src="app.js"></script>
   </head>
   <body class="container" data-bs-theme="dark">
-    <h1 class="my-3 text-center">inTime</h1>
-
     <div class="mb-4">
       <div class="clock m-auto">
         <div id="arm" class="arm"></div>
-        <div id="beats">
-          <script>
-            ["hiHat", "snare", "kick"].forEach((type, ring) => {
-              for (let i = 0; i < 32; i++) {
-                document.write(`
-        <div class="beat-dot ${type}" data-index="${i}" data-ring="${ring}"></div>
-      `);
-              }
-            });
-          </script>
-          <div class="clock-face">
-            <div class="ring outer-ring"></div>
-            <div class="ring middle-ring"></div>
-            <div class="ring inner-ring"></div>
-          </div>
+        <div id="beats"></div>
+        <div class="clock-face">
+          <div class="ring outer-ring"></div>
+          <div class="ring middle-ring"></div>
+          <div class="ring inner-ring"></div>
         </div>
       </div>
     </div>
@@ -54,12 +42,16 @@
       <button class="tempo-change" data-change="-1">-</button>
 
       <div class="tempo-container">
-        <div id="tempo">120</div>
+        <div id="tempo">100</div>
         <div class="bpm">bpm</div>
       </div>
 
       <button class="tempo-change" data-change="+1">+</button>
       <button class="tempo-change" data-change="+5">+5</button>
+    </div>
+
+    <div class="tempo-slider text-center">
+      <input type="range" id="tempo-slider" min="40" max="240" value="100" step="5">
     </div>
 
     <script src="metronome.js"></script>

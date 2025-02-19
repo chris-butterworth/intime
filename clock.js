@@ -87,7 +87,7 @@ class BeatGrid {
 }
 
 class Clock {
-  constructor(tempo = 120) {
+  constructor(tempo = 100) {
     this.metronome = new Metronome(tempo); // The Clock *has a* Metronome
     this.hand = new ClockHand(document.getElementById("arm"), this.metronome);
     this.beatGrid = new BeatGrid(document.getElementById("beat-grid"), {

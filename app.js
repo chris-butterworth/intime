@@ -19,19 +19,26 @@ playButton.addEventListener("click", () => {
 // Tempo change buttons
 const tempoChangeButtons = document.getElementsByClassName("tempo-change");
 const tempo = document.getElementById("tempo");
+const tempoSlider = document.getElementById("tempo-slider");
 
 for (let i = 0; i < tempoChangeButtons.length; i++) {
   tempoChangeButtons[i].addEventListener("click", function () {
     clock.metronome.tempo += parseInt(this.dataset.change);
     tempo.textContent = clock.metronome.tempo;
+    tempoSlider.value = clock.metronome.tempo;
   });
 }
 
-function positionDots() {
-  const beatDots = document.querySelectorAll(".beat-dot");
+// Tempo slider
+tempoSlider.addEventListener("input", function () {
+  clock.metronome.tempo = parseInt(this.value);
+  tempo.textContent = this.value;
+});
+
+function generateAndPositionBeatDots() {
+  const beatsContainer = document.getElementById('beats');
   const numRings = 4; // Number of rings
   const clockRadius = 45; // Radius of the clock face
-
   const ringSpacing = clockRadius / numRings; // Calculate the spacing between rings
 
   const ringRadii = [];
@@ -39,24 +46,28 @@ function positionDots() {
     ringRadii.push(clockRadius - i * ringSpacing); // Calculate the radius of each ring
   }
 
-  beatDots.forEach((dot) => {
-    const ring = parseInt(dot.dataset.ring); // Get the ring index from the data attribute
-    const radius = ringRadii[ring]; // Get the radius of the ring
+  ["hiHat", "snare", "kick"].forEach((type, ring) => {
+    for (let i = 0; i < 32; i++) {
+      const beatDot = document.createElement('div');
+      beatDot.className = `beat-dot ${type}`;
+      beatDot.dataset.index = i;
+      beatDot.dataset.ring = ring;
 
-    const angle = (parseInt(dot.dataset.index) / 32) * 360 - 90; // Calculate the angle for the dot
+      const angle = (i / 32) * 360 - 90; // Calculate the angle for the dot
+      const radius = ringRadii[ring]; // Get the radius of the ring
 
-    const left =
-      48 + radius * Math.cos((angle * Math.PI) / 180) - dot.offsetWidth / 2;
-    const top =
-      48 + radius * Math.sin((angle * Math.PI) / 180) - dot.offsetHeight / 2;
+      const left = 48 + radius * Math.cos((angle * Math.PI) / 180) - beatDot.offsetWidth / 2;
+      const top = 48 + radius * Math.sin((angle * Math.PI) / 180) - beatDot.offsetHeight / 2;
 
-    dot.style.left = `${left}%`;
-    dot.style.top = `${top}%`;
+      beatDot.style.left = `${left}%`;
+      beatDot.style.top = `${top}%`;
+
+      beatsContainer.appendChild(beatDot);
+    }
   });
 }
 
-
-window.onload = () => {
-  positionDots(); // Call after the dots are in the DOM
+document.addEventListener('DOMContentLoaded', () => {
+  generateAndPositionBeatDots();
   clock.beatGrid.updateClockBeats();
-};
+});

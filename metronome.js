@@ -1,17 +1,27 @@
 class Metronome {
-  constructor(tempo = 120) {
-    this.audioContext = null;
-    this.notesInQueue = [];
+  constructor(tempo = 100) {
+    try {
+      this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    } catch (e) {
+      console.error('Web Audio API is not supported in this browser', e);
+      alert('Web Audio API is not supported in this browser');
+      return;
+    }
+    this.isPlaying = false;
+    this.startTime; 
+    this.currentNote; 
+    this.tempo = tempo; 
+    this.lookahead = 25.0; // How frequently to call scheduling function (in milliseconds)
+    this.scheduleAheadTime = 0.1; // How far ahead to schedule audio (sec)
+    this.nextNoteTime = 0.0; // when the next note is due.
+    this.noteResolution = 0; // 0 == 16th, 1 == 8th, 2 == quarter note
+    this.noteLength = 0.05; // length of "beep" (in seconds)
+    this.notesInQueue = []; // the notes that have been put into the web audio and may or may not have played yet. {note, time}
     this.currentBeatInBar = 0;
     this.beatsPerBar = 4;
-    this.tempo = tempo;
-    this.lookahead = 25;
-    this.scheduleAheadTime = 0.1;
-    this.nextNoteTime = 0.0;
-    this.isRunning = false;
-    this.intervalID = null;
     this.counter = 0;
     this.subdivision = 64;
+    this.animationFrameID = null; // requestAnimationFrame identifier.
   }
 
   nextNote() {
@@ -58,27 +68,28 @@ class Metronome {
       const index = (this.counter + 1) / 8 - 1;
       this.applyGrowEffect(index);
     }
+    this.animationFrameID = requestAnimationFrame(this.scheduler.bind(this));
   }
 
   start() {
-    if (this.isRunning) return;
+    if (this.isPlaying) return;
 
     if (this.audioContext == null) {
       this.audioContext = new (window.AudioContext ||
         window.webkitAudioContext)();
     }
 
-    this.isRunning = true;
+    this.isPlaying = true;
 
     this.currentBeatInBar = 0;
     this.nextNoteTime = this.audioContext.currentTime + 0.05;
 
-    this.intervalID = setInterval(() => this.scheduler(), this.lookahead);
+    this.scheduler(); // kick off scheduling
   }
 
   stop() {
-    this.isRunning = false;
-    clearInterval(this.intervalID);
+    this.isPlaying = false;
+    cancelAnimationFrame(this.animationFrameID);
     this.counter = 0; // Reset the counter
     this.currentBeatInBar = 0; // Reset the beat in bar
     this.notesInQueue = []; // Clear the notes queue
@@ -87,7 +98,7 @@ class Metronome {
   }
 
   startStop() {
-    if (this.isRunning) {
+    if (this.isPlaying) {
       this.stop();
     } else {
       this.start();
