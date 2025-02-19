@@ -140,6 +140,16 @@
   margin: 0 15px;
 }
 
+.tempo-slider {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.tempo-slider input[type="range"] {
+  width: 80%;
+}
+
 button {
   padding: 6px;
   border: none;
